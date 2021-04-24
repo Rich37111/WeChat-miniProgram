@@ -8,7 +8,6 @@ Page({
        */
       data: {
             ids: -1,
-            //phone: '',
             userInfo:{},
             hasUserInfo: false,
             canIUseGetUserProfile: false,
@@ -24,19 +23,7 @@ Page({
               })
             }
           },
-      getUserProfile(e) {
-            // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
-            // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-            wx.getUserProfile({
-              desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-              success: (res) => {
-                this.setData({
-                  userInfo: res.userInfo,
-                  hasUserInfo: true
-                })
-              }
-            })
-          },    
+       
           
       choose(e) {
             let that = this;
@@ -46,69 +33,54 @@ Page({
             //下面这种办法无法修改页面数据
             /* this.data.ids = e.detail.value;*/
       },
-      // //获取用户手机号
-      // getPhoneNumber: function(e) {
-      //       let that = this;
-      //       //判断用户是否授权确认
-      //       if (!e.detail.errMsg || e.detail.errMsg != "getPhoneNumber:ok") {
-      //             wx.showToast({
-      //                   title: '获取手机号失败',
-      //                   icon: 'none'
-      //             })
-      //             return;
-      //       }
-      //       wx.showLoading({
-      //             title: '获取手机号中...',
-      //       })
-      //       wx.login({
-      //             success(re) {
-      //                   wx.cloud.callFunction({
-      //                         name: 'regist', // 对应云函数名
-      //                         data: {
-      //                               $url: "phone", //云函数路由参数
-      //                               encryptedData: e.detail.encryptedData,
-      //                               iv: e.detail.iv,
-      //                               code: re.code
-      //                         },
-      //                         success: res => {
-      //                               console.log(res);
-      //                               wx.hideLoading();
-      //                               if (res.result == null) {
-      //                                     wx.showToast({
-      //                                           title: '获取失败,请重新获取',
-      //                                           icon: 'none',
-      //                                           duration: 2000
-      //                                     })
-      //                                     return false;
-      //                               }
-      //                               //获取成功，设置手机号码(动态数据绑定)
-      //                               that.setData({
-      //                                     phone: res.result.data.phoneNumber
-      //                               })
-      //                         },
-      //                         fail: err => {
-      //                               console.error(err);
-      //                               wx.hideLoading()
-      //                               wx.showToast({
-      //                                     title: '获取失败,请重新获取',
-      //                                     icon: 'none',
-      //                                     duration: 2000
-      //                               })
-      //                         }
-      //                   })
-      //             },
-      //             fail: err => {
-      //                   console.error(err);
-      //                   wx.hideLoading()
-      //                   wx.showToast({
-      //                         title: '获取失败,请重新获取',
-      //                         icon: 'none',
-      //                         duration: 2000
-      //                   })
-      //             }
-      //       })
-      // },
+     
 
+      getUserProfile(e) {
+            // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
+            // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+            wx.getUserProfile({
+              desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+              success: (res) => {
+                    console.log('获取用户信息成功',res)     //这里的信息是对的
+                    let user = res.userInfo
+                    wx.setStorageSync('user', user)         //将用户信息缓存到本地，下次同一用户再次登录时就不用再授权了
+                    this.setData({
+                        userInfo: user,
+                        hasUserInfo: true
+                      })
+                      console.log('getUserProfile的参数e',e)      //里面没有有用信息
+                  //   db.collection('user').add({
+                  //       data: {
+                  //            _id:user._id,
+                  //            _openid:user._openid,
+                  //             campus:{
+                  //                   id:user.campus.id,
+                  //                   name:user.campus.name,
+                  //             },
+                  //             email:user.email,
+                  //             info:{
+                  //                   avatarUrl:user.avatarUrl,
+                  //                   city:user.city,
+                  //                   country:user.country,
+                  //                   gender:user.gender,
+                  //                   language:user.language,
+                  //                   nickName:user.nickName,
+                  //                   province:user.province,
+                  //             },
+                  //             parse:user.parse,
+                  //             qqnum:user.qqnum,
+                  //             stamp:user.stamp,
+                  //             userful:user.userful,
+                  //             wxnum:user.wxnum,
+                  //       }
+                  //   })
+                
+              },
+              fail: res=> {
+                    console.log('获取用户信息失败',res)
+              } 
+             })
+          },   
 
       wxInput(e) {
             this.data.wxnum = e.detail.value;
@@ -121,7 +93,8 @@ Page({
       },
       getUserInfo(e) {
             let that = this;
-            console.log(e);
+            console.log('getUserInfo的参数e',e);            //参数信息不对
+
             let test = e.detail.errMsg.indexOf("ok");
             if (test == '-1') {
                   wx.showToast({
@@ -130,9 +103,10 @@ Page({
                         duration: 2000
                   });
             } else {
-                  that.setData({
-                        userInfo: e.detail.userInfo
-                  })
+                  // that.setData({
+                  //       //这里有问题，e中的userinfo不对
+                  //       userInfo: e.detail.userInfo
+                  // }) 
                   that.check();
             }
       },
@@ -198,7 +172,6 @@ Page({
             })
             db.collection('user').add({
                   data: {
-                        //phone: that.data.phone,
                         campus: that.data.campus[that.data.ids],
                         qqnum: that.data.qqnum,
                         email: that.data.email,
@@ -209,7 +182,7 @@ Page({
                         parse: 0,
                   },
                   success: function(res) {
-                        console.log(res)
+                        console.log('sssssssssssssssssssssssssss',res)
                         db.collection('user').doc(res._id).get({
                               success: function(res) {
                                     app.userinfo = res.data;
@@ -227,4 +200,34 @@ Page({
                   }
             })
       },
+
+
+      getdetail() {
+            let that = this;
+            db.collection('user').where({
+                  _openid: app.openid
+            }).get({
+                  success: function(res) {
+                        let info = res.data[0];
+                        that.setData({
+                              phone: info.phone,
+                              qqnum: info.qqnum,
+                              wxnum: info.wxnum,
+                              email: info.email,
+                              ids: info.campus.id,
+                              _id: info._id
+                        })
+                  },
+                  fail() {
+                        wx.showToast({
+                              title: '获取失败',
+                              icon: 'none'
+                        })
+                        let e = setTimeout(
+                              wx.navigateBack({}), 2000
+                        )
+                  }
+            })
+      },
 })
+

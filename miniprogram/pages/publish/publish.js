@@ -129,7 +129,7 @@ Page({
                   isbn: bn
             }).get({
                   success(res) {
-                        console.log(res)
+                        //console.log('get_book查询书籍返回信息',res)
                         //添加到数据库
                         if (res.data == "") {
                               that.addbooks(bn);
@@ -156,37 +156,41 @@ Page({
                         isbn: bn
                   },
                   success: res => {
-                        console.log('调取云函数books添加书籍成功',res.result.body)
+                        //console.log('调取云函数books添加书籍成功',res.result.body)
                         //报appkey不存在的错误,结果是node依赖没有更新
                         if (res.result.body.status == 0) {
                               //保存书籍信息的回调
-                              let info = res.result.body.result;
+                              // let info = res.result.body.result;
+                              // console.log('addbooks保存书籍后的信息',info)
+                              // db.collection('books').add({
+                              //       data: res.result.body.result,})
+                              //       .then(res=> {
+                              //             console.log('添加数据成功的回调',res);
+                              //             //这里的res是添加数据成功的回调，不是书籍信息的回调
+                              //             wx.hideLoading();
+                              //             that.setData({
+                              //                   bookinfo: info,
+                              //                   show_a: false,
+                              //                   show_b: true,
+                              //                   show_c: false,
+                              //                   active: 1,
+                              //             })
+                              //       })
+                              //       .catch(console.error)
                               db.collection('books').add({
-                                    data: res.result.body.result,})
-                                    .then(res=> {
-                                          //console.log(res);
-                                          //这里的res是添加数据成功的回调，不是书籍信息的回调
+                                    data: res.result.body.result,
+                                    success: function(res) {
                                           wx.hideLoading();
                                           that.setData({
-                                                bookinfo: info,
+                                                bookinfo: res.result.body.result,
                                                 show_a: false,
                                                 show_b: true,
                                                 show_c: false,
                                                 active: 1,
                                           })
-                                    })
-                                    .catch(console.error)
-                                    // success: function(res) {
-                                    //       wx.hideLoading();
-                                    //       that.setData({
-                                    //             bookinfo: res.result.body.result,
-                                    //             show_a: false,
-                                    //             show_b: true,
-                                    //             show_c: false,
-                                    //             active: 1,
-                                    //       })
-                                    // },
-                                    // fail: console.error(err)
+                                    },
+                                    fail: console.error
+                              })
                               }
                         },
                   
@@ -199,13 +203,13 @@ Page({
       priceChange(e) {
             this.data.price = e.detail;
       },
-      //时才输入改变
+      //时长输入改变
       duraChange(e) {
             this.data.dura = e.detail;
       },
       //地址输入
       placeInput(e) {
-            console.log(e)
+            //console.log(e)
             this.data.place = e.detail.value
       },
       //书籍类别选择
@@ -296,6 +300,7 @@ Page({
       //正式发布
       publish() {
             let that = this;
+            //.log('发布时的数据',that)
             wx.showModal({
                   title: '温馨提示',
                   content: '经检测您填写的信息无误，是否马上发布？',
@@ -324,7 +329,7 @@ Page({
                                           key: that.data.bookinfo.title + that.data.bookinfo.keyword
                                     },
                                     success(e) {
-                                          console.log(e)
+                                          //console.log('发布成功时的数据',e)
                                           that.setData({
                                                 show_a: false,
                                                 show_b: false,

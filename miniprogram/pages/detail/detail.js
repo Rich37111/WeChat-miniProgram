@@ -31,6 +31,7 @@ Page({
                               collegeName: JSON.parse(config.data).college[parseInt(res.data.collegeid) + 1],
                               publishinfo: res.data
                         })
+                        //console.log('发布信息的具体信息',res.data._openid, res.data.bookinfo._id)
                         that.getSeller(res.data._openid, res.data.bookinfo._id)
                   }
             })
@@ -54,6 +55,7 @@ Page({
             let that = this;
             db.collection('books').doc(e).get({
                   success: function(res) {
+                        //console.log('书本信息信息信息',res)
                         that.setData({
                               bookinfo: res.data
                         })

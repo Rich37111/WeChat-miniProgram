@@ -8,6 +8,8 @@ Page({
       data: {
             showShare: false,
             poster: JSON.parse(config.data).share_poster,
+            userInfo:{},
+            hasUserInfo: false,
       },
       onShow() {
             this.setData({
@@ -35,6 +37,8 @@ Page({
                   url: e.currentTarget.dataset.go
             })
       },
+
+
       //展示分享弹窗
       showShare() {
             this.setData({
