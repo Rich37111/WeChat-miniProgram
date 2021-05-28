@@ -9,6 +9,7 @@
 
 <view class="contain">
       <block wx:if="{{list.length==0}}">
+            <!-- 搜索框为空则显示搜索历史 -->
             <block wx:if="{{!blank}}">
                   <view class="a">
                         <image src="/images/his.png"></image>
@@ -23,12 +24,13 @@
                         </block>
                   </block>
             </block>
+            <!-- 搜索框不为空则显示搜索结果 -->
             <block wx:if="{{blank}}">
                   <view class="a">
                         <image src="/images/result.png"></image>
                         <view>搜索结果</view>
                   </view>
-                  <!--无内容显示-->
+                  <!--搜索不到内容显示-->
                   <view class="nocontent">
                         <image src="/images/blank.png"></image>
                         <view class="blank_text">暂无{{key}}相关书籍哟~</view>

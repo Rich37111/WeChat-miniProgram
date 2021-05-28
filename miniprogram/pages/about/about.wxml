@@ -14,15 +14,15 @@
       </view>
       <view class="title">联系方式</view>
       <view class="description">
-            <view class="tip" bindtap="copy" data-copy="https://github.com/xuhuai66" data-name="链接">
+            <view class="tip" bindtap="copy" data-copy="https://github.com/Rich37111" data-name="链接">
                   <view>Github</view>:
                   <text>https://github.com/Rich37111</text>
             </view>
-            <view class="tip" bindtap="copy" data-copy="xuhuai66" data-name="微信">
+            <view class="tip" bindtap="copy" data-copy="RDZ-577" data-name="微信">
                   <view>Wechat</view>:
                   <text>RDZ-577</text>
             </view>
-            <view class="tip" bindtap="copy" data-copy="1604026596" data-name="QQ">
+            <view class="tip" bindtap="copy" data-copy="1660415124" data-name="QQ">
                   <view>QQ</view>:
                   <text>1660415124</text>
             </view>

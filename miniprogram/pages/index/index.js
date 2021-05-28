@@ -176,6 +176,7 @@ Page({
                   }
             })
       },
+      //上拉触底
       onReachBottom() {
             this.more();
       },
@@ -183,7 +184,9 @@ Page({
       onPullDownRefresh() {
             this.getList();
       },
+      //回到顶部
       gotop() {
+            //将页面滚动到顶部
             wx.pageScrollTo({
                   scrollTop: 0
             })
@@ -214,6 +217,7 @@ Page({
                   })
             }
       },
+      //监听用户点击右上角菜单的「转发」按钮
       onShareAppMessage() {
             return {
                   title: JSON.parse(config.data).share_title,

@@ -4,12 +4,12 @@ var data = {
       //分享配置
       share_title: '四川师范大学二手书',
       share_img: '/images/poster.jpg', //可以是网络地址，本地文件路径要填绝对位置
-      share_poster:'https://7269-rich-4gbsq7ct21c19fbd-1304790203.tcb.qcloud.la/share/shareCode.png?sign=66056286937bf9a13f1149c330232fed&t=1617844332',//必须为网络地址
+      share_poster:'https://7269-rich-4gbsq7ct21c19fbd-1304790203.tcb.qcloud.la/%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E6%A0%87%E5%87%86%E8%89%B2%E7%89%88.png?sign=647a97804129aaba54a951a555ee26f3&t=1620818093',//必须为网络地址
       //客服联系方式
       kefu: {
             weixin: 'RDZ-577',
             qq: '1660415124',
-            gzh: 'https://7269-rich-4gbsq7ct21c19fbd-1304790203.tcb.qcloud.la/share/shareCode.png?sign=66056286937bf9a13f1149c330232fed&t=1617844332', //公众号二维码必须为网络地址
+            gzh: 'https://7269-rich-4gbsq7ct21c19fbd-1304790203.tcb.qcloud.la/%E5%B7%9D%E5%B8%88%E4%BA%8C%E6%89%8B%E4%B9%A6_%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%A9%E6%96%99%E5%9B%BE.jpg?sign=831550e6830a3904ac13da6766e510e5&t=1620817531', //公众号二维码必须为网络地址
             phone: '' //如果你不设置电话客服，就留空
       },
       //默认启动页背景图，防止请求失败完全空白 
@@ -26,74 +26,63 @@ var data = {
             },
 
       ],
-      //配置学院，建议不要添加太多，不然前端不好看
+      //配置种类
       college: [{
                   name: '通用',
                   id: -1
             },
             {
-                  name: '计科',
+                  name: '教材',
                   id: 0
             },
             {
-                  name: '经管',
+                  name: '考试',
                   id: 1
             },
             {
-                  name: '物电',
+                  name: '小说',
                   id: 2
             },
             {
-                  name: '数学',
+                  name: '杂志',
                   id: 3
             },
             {
-                  name: '英语',
+                  name: '漫画',
                   id: 4
             },
             {
-                  name: '汉语言',
+                  name: '励志',
                   id: 5
             },
             {
-                  name: '化学',
+                  name: '美食',
                   id: 6
             },
             {
-                  name: '生科',
+                  name: '科技',
                   id: 7
             },
             {
-                  name: '心理',
+                  name: '经管',
                   id: 8
             },
             {
-                  name: '商学',
+                  name: '艺术',
                   id: 9
             },
             {
-                  name: '法学',
+                  name: '文化',
                   id: 10
             },
             {
-                  name: '体育',
+                  name: '其他',
                   id: 11
             },
-            {
-                  name: '舞蹈',
-                  id: 12
-            },
-            {
-                  name: '音乐',
-                  id: 13
-            },
-            {
-                  name: '其它',
-                  id: 14
-            },
+            
       ],
 }
-//下面的就别动了
+//ignore following
 function formTime(creatTime) {
       let date = new Date(creatTime),
             Y = date.getFullYear(),

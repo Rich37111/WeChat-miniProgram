@@ -1,18 +1,15 @@
+//配置支付信息
 const config = {
       appid: 'wxcd13cbff8a9b81bb', //服务商公众号Appid
       envName: 'rich-4gbsq7ct21c19fbd', // 小程序云开发环境ID
-      mchid: 'xxxxxxxx', //商户号
-      partnerKey: 'xxxxxxxxxxxxx', //此处填服务商密钥
-      notify_url: 'https://mp.weixin.qq.com', //这个不要管
-      spbill_create_ip: '127.0.0.1'//这个不要管
+      mchid: 'xxxxxxxx', //微信商户号
+      partnerKey: 'xxxxxxxxxxxxx', //服务商密钥 微信支付安全密钥
+      notify_url: 'https://mp.weixin.qq.com', //支付回调网址
+      spbill_create_ip: '127.0.0.1'//回调地址（有自己的后台就填自己的IP地址）
 };
 
 /*
-下
-面
-不
-用
-管
+ignore following
 */
 
 const cloud = require('wx-server-sdk');
@@ -22,7 +19,7 @@ cloud.init({
 const db = cloud.database();
 const TcbRouter = require('tcb-router'); //云函数路由
 const rq = require('request');
-const tenpay = require('tenpay');//支付核心模块
+const tenpay = require('tenpay');//引入支付的第三方依赖 支付核心模块
 
 exports.main = async (event, context) => {
       const app = new TcbRouter({
@@ -39,14 +36,15 @@ exports.main = async (event, context) => {
             // 因为从端里传过来的商品数据都是不可靠的
             let good=goods.data;
             const curTime = Date.now();
+            //初始化支付，用了tenpay这个模块
             const api = tenpay.init(config)
             let result = await api.getPayParams({
                   //商户订单号，我这里是定义的boolk+商品发布时间+当前时间戳
                   //微信这里限制订单号一次性不能重复，只需要唯一即可
                   out_trade_no: 'book'+good.creat + '' + curTime,     
-                  body: good.bookinfo.title,       //商品名称，我设置的书名
-                  total_fee: parseInt(good.price)*100,     //金额，注意是数字，不是字符串
-                 openid: wxContext.OPENID //***用户的openid
+                  body: good.bookinfo.title,       //商品名称，设置的书名
+                  total_fee: parseInt(good.price)*100,     //金额（分），注意是数字，不是字符串
+                 openid: wxContext.OPENID //付款用户的openid
             });
             ctx.body = result;//返回前端结果
       });

@@ -97,6 +97,7 @@
       <import src="/common.wxml" />
       <template is="loadmore" data="{{nomore}}" />
 </block>
+<!-- 监控屏幕滚动距离，大于某个值就出现回到顶部的图片 -->
 <van-transition show="{{ scrollTop>500 }}" custom-class="block" duration="600">
       <view class="totop" bindtap="gotop">
             <image  lazy-load src="/images/top.png"></image>

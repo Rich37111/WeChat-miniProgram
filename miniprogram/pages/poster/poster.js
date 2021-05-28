@@ -46,7 +46,7 @@ Page({
                         // handle error
                   })
             }).catch(error => {
-                  console.log(error)
+                  console.log(error)           //输出错误信息
                   wx.hideLoading();
                   wx.showToast({
                         title: '制作失败',

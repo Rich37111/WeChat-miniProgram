@@ -27,7 +27,7 @@ Page({
                   key: 'history',
                   success: function(res) {
                         let hislist = JSON.parse(res.data);
-                        //限制长度
+                        //限制显示搜索历史长度
                         if (hislist.length > 5) {
                               hislist.length = 5
                         }
@@ -45,10 +45,11 @@ Page({
       //最新推荐书籍
       getnew() {
             let that = this;
+            // 正则查询含有关键字的信息（大小写不敏感）
             db.collection('publish').where({
                   status: 0,
                   dura: _.gt(new Date().getTime()),
-            }).orderBy('creat', 'desc').get({
+            }).orderBy('creat', 'desc').get({         //按降序排列
                   success: function(res) {
                         let newlist = res.data;
                         //限定5个推荐内容
@@ -91,11 +92,12 @@ Page({
             db.collection('publish').where({
                   status: 0,
                   dura: _.gt(new Date().getTime()),
+                  // 正则查询含有关键字的信息（大小写不敏感）
                   key: db.RegExp({
                         regexp: '.*' + key + '.*',
                         options: 'i',
                   })
-            }).orderBy('creat', 'desc').limit(20).get({
+            }).orderBy('creat', 'desc').limit(20).get({     //按时间降序排列
                   success(e) {
                         wx.hideLoading();
                         that.setData({
